@@ -16,8 +16,6 @@ body {
 
 .container {
 	position: relative;
-/*	display: flex;
-	flex-direction: column;*/
 	max-width: 640px;
 	margin: auto;
 }
@@ -37,7 +35,7 @@ h1 {
 }
 
 h2 {
-	font-size: 16px;
+	font-size: 14px;
 	padding: 0;
 	margin: 0;
 }
@@ -52,13 +50,10 @@ p {
 	padding-left: 2px;
 	margin: 0;
 	height: 14px;
+	font-size: 12px;
 }
 
-.title,
-.char,
-.enemy,
-.fight,
-.defender {
+.char {
 	display: flex;
 	flex-direction: row;
 	margin: 0px 7px 7px 7px;
@@ -67,18 +62,87 @@ p {
 
 .title {
 	height: 60px;
-	width: 400px;
-	padding-left: 80px;
-}
-
-.char,
-.enemy,
-.defender {
-	height: 150px;
+	width: 520px;
+	margin-left: 80px;
+	margin-bottom: 10px;
 }
 
 .title-text {
+	width: 500px;
 	padding-left: 18px;
+	line-height: 60px;
+}
+
+.char {
+	height: 150px;
+}
+
+.arena {
+	position: relative;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border: 2px solid black;
+}
+
+.arena-img {
+	width: 100%;
+	height: 300px;
+}
+
+.meters {
+	position: absolute;
+	height: 20px;
+	top: 40px;
+	left: 20px;
+	width: 90%;
+}
+
+.name-row {
+	position: absolute;
+	top: 4px;
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 40px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-size: 24px;
+	color: red;
+/*  background: -webkit-linear-gradient(top, red, yellow);
+	background: linear-gradient(top, darkred, yellow);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;*/
+	text-shadow: 2px 2px #000000;
+}
+
+.player-box,
+.defender-box {
+	position: absolute;
+	/*z-index: 2;*/
+	height: 134px;
+	width: 100px;
+	background-color: grey;
+	opacity: 0.8;
+	bottom: 30px;
+}
+
+.player-box {
+	left: 50px;
+}
+
+.defender-box {
+	right: 50px;
+}
+
+.fight {
+	position: absolute;
+	top: 130px;
+	width: 100%;
+	color: red;
+	text-align: center;
+	font-size: 30px;
+	text-shadow: 2px 2px #000000;
 }
 
 .gen-row {
@@ -92,12 +156,10 @@ p {
 .row-text {
 	width: 18px;
 	height: 150px;
-	font-size: 12px;
-	vertical-align: middle;
+	margin-right: 10px;
 }
 
 .char-box {
-/*	height: 132px;*/
 	width: 104px;
 	color: white;
 	text-align: center;
@@ -110,7 +172,7 @@ p {
 }
 
 .char-content {
-	height: 132px;
+	height: 134px;
 	width: 100px;
 	display: flex;
   flex-direction: column;
@@ -123,7 +185,6 @@ p {
 .stats-box {
 	position: absolute;
 	top: 0;
-	left: 2px;
 	height: 132px;
 	width: 100px;
 	background-color: grey;
@@ -185,10 +246,6 @@ p {
 	background-color: purple;
 }
 
-.fight-btn {
-	margin-left: 10px;
-}
-
 #char_title {
 	padding-top: 5px;
 }
@@ -203,7 +260,7 @@ p {
 
 /*Animations*/
 .char-box:hover > .stats-hover {
-	top: 22px;
+	top: 18px;
 	transition: 0.3s;
 	transition-timing-function: ease-in-out;
 }
@@ -212,3 +269,109 @@ p {
 	transition: 0.3s;
 	transition-timing-function: ease-in-out;
 }
+
+/*progress bars*/
+.progress {
+  background-color: red;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.progress-bar {
+	background-color: yellow;
+}
+
+/*Button*/
+.button {
+	height: 50px;
+	width: 90px;
+	cursor: pointer;
+	margin: 50px auto;
+}
+.button .outer {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	background: rgba(0,0,0,0.65);
+	border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	box-shadow: inset rgba(0,0,0,0.85) 0px 1px 5px;
+	-webkit-box-shadow: inset rgba(0,0,0,0.85) 0px 1px 5px;
+	-moz-box-shadow: inset rgba(0,0,0,0.85) 0px 1px 5px;
+	-webkit-transform: perspective(500px) rotateX(35deg);
+	-moz-transform: perspective(500px) rotateX(35deg);
+}
+.button .outer .height {
+	position: relative;
+	height: 100%;
+	margin-top: -7.5px;
+	padding-bottom: 7.5px;
+	background: #39a02d;
+	border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	box-shadow: rgba(0,0,0,0.85) 0px 1px 1px, inset rgba(0,0,0,0.35) 0px -2px 8px;
+	-webkit-box-shadow: rgba(0,0,0,0.85) 0px 1px 1px, inset rgba(0,0,0,0.35) 0px -2px 8px;
+	-moz-box-shadow: rgba(0,0,0,0.85) 0px 1px 1px, inset rgba(0,0,0,0.35) 0px -2px 8px;
+	-webkit-transition: all 0.1s ease-in-out;
+	-moz-transition: all 0.1s ease-in-out;
+}       
+.button:hover .outer .height {
+	margin-top: -5px;
+	padding-bottom: 5px;
+	background: #3aaf2d;
+	box-shadow: rgba(0,0,0,0.25) 0px 1px 1px, inset rgba(0,0,0,0.35) 0px -2px 6px;
+	-webkit-box-shadow: rgba(0,0,0,0.25) 0px 1px 1px, inset rgba(0,0,0,0.35) 0px -2px 6px;
+	-moz-box-shadow: rgba( 0,0,0,0.25) 0px 1px 1px, inset rgba(0,0,0,0.35) 0px -2px 6px;
+}
+.button:active .outer .height {
+	margin-top: 0px;
+	padding-bottom: 0px;
+}
+.button .outer .height .inner {
+	line-height: 1.4em;
+	font-size: 15px;
+	letter-spacing: .05em;
+	position: relative;
+	height: 100%;
+	text-align: center;
+	text-shadow: #8aff7b 0px 0px 1px;
+	background: #44d135;
+	background: -moz-linear-gradient(top, #80ec75 0%, #43d034 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#80ec75), color-stop(100%,#43d034)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #80ec75 0%,#43d034 100%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(top, #80ec75 0%,#43d034 100%); /* W3C */
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	box-shadow: inset rgba(255,255,255,0.85) 0px 0px 1px;
+	-webkit-box-shadow: inset rgba(255,255,255,0.85) 0px 0px 1px;
+	-moz-box-shadow: inset rgba(255,255,255,0.85) 0px 0px 1px;
+	-webkit-transition: all 0.1s ease-in-out;
+	-moz-transition: all 0.1s ease-in-out;
+}
+.button:hover .outer .height .inner{
+	text-shadow: #99f48d 0px 0px 1px;
+	background: #43d034; /* Old browsers */
+	background: -moz-linear-gradient(top, #43d034 0%, #67e45c 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#43d034), color-stop(100%,#67e45c)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #43d034 0%,#67e45c 100%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(top, #43d034 0%,#67e45c 100%); /* W3C */
+}
+.button:active .outer .height .inner{
+	text-shadow: #319926 0px 1px 0px;
+	border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	box-shadow: inset rgba(0,0,0,0.9) 0px 0px 8px;
+	-webkit-box-shadow: inset rgba(0,0,0,0.9) 0px 0px 8px;
+	-moz-box-shadow: inset rgba(0,0,0,0.9) 0px 0px 8px;
+	background: #1d7d12; /* Old browsers */
+	background: -moz-linear-gradient(top, #1d7d12 0%, #4fd342 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1d7d12), color-stop(100%,#4fd342)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #1d7d12 0%,#4fd342 100%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(top, #1d7d12 0%,#4fd342 100%); /* W3C */
+}
+
+

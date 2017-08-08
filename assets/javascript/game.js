@@ -4,7 +4,7 @@
 $(document).ready(function(){
 
 	//load initial screen
-	action.reset();
+	// action.reset();
 
   //choose fighter
   $('#char_row').on('click', '.char-box', function() {

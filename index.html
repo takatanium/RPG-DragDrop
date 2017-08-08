@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Shojumaru" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 
@@ -24,10 +24,10 @@
 	      <h2 class="row-text" id="char_title">C h a r a c t e r</h2>
 	      <div class="gen-row" id="char_row">
 
-<!-- 	      	<div class="char-box" id="ryu">
+	      	<div class="char-box" id="ryu" draggable="true" ondragstart="drag(event);">
 	      		<div class="char-content" id="content_ryu">
 		          <div class="char-row">
-		            <img class="char-img" id="img_ryu" src="assets/images/ryu.jpg">
+		            <img class="char-img" id="img_ryu" src="assets/images/ryu.jpg" draggable="false">
 		            <p id="char_col">R Y U</p>
 		          </div>
 		          <div class="stats-row">
@@ -38,13 +38,35 @@
 	      		<div class="stats-box stats-hover">
 	      			<p class="stats-ap">AP:7 CP:20</p>
 						</div>
-	        </div> -->
+	        </div>
 
 
 	      </div> 
 	    </div>
 
-	    <div class="enemy">
+	    <div class="arena">
+	    	<div class="name-row">
+					<div id="name-player">Player</div>
+					<div id="name-comp">Computer</div>
+	    	</div>
+	    	<div class="meters">
+					<div class="progress">
+					  <div class="progress-bar" style="width:60%">
+					  </div>
+					</div>
+	    	</div>
+
+				<img class="arena-img" src="assets/images/stage_base.jpg">
+				<div class="player-box"></div>
+				<div class="fight" id="fight_info">FIGHT!<br>
+					<div class="button" id="fight-btn"><div class="outer"><div class="height"><div class="inner"></div></div></div></div>
+				</div>
+				<div class="defender-box"></div>
+				<div></div>
+	    </div>
+
+			
+<!-- 	    <div class="enemy" ondrop="drop(event)" ondragover="allowDrop(event);">
 	      <h2 class="row-text" id="enemy_title">E N E M I E S</h2>
 	      <div class="gen-row" id="enemy_row">
 	      </div>
@@ -61,11 +83,26 @@
 	      </div>
 	    </div>
 
-	    <div class="info" id="info"</div>
+	    <div class="info" id="info"></div> -->
 
 	  </div>
   </div>
 
   <script src="assets/javascript/game.js"></script>
+
+  <script>
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+	}
+
+	function drop(ev) {
+	    ev.preventDefault();
+	    var data = ev.dataTransfer.getData("text");
+	    ev.target.appendChild(document.getElementById(data));
+	}
+  function allowDrop(ev) {
+    ev.preventDefault();
+	}
+  </script>
 </body>
 </html>
