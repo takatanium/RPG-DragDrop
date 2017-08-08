@@ -1,0 +1,214 @@
+html,
+body {
+	font-family: 'Shojumaru', cursive;
+	font-size: 14px;
+	background-image: url("../images/asanoha.png");
+	position: relative;
+}
+
+.logo {
+	position: absolute;
+	top: 0;
+	left: 0px;
+	width: 150px;
+	height: auto;
+}
+
+.container {
+	position: relative;
+/*	display: flex;
+	flex-direction: column;*/
+	max-width: 640px;
+	margin: auto;
+}
+
+.main {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	top: 0;
+	left: 55px;
+}
+
+h1 {
+	padding: 0 0 0 18px;
+	margin: 0;
+	text-align: left;
+}
+
+h2 {
+	font-size: 16px;
+	padding: 0;
+	margin: 0;
+}
+
+img {
+	height: 100%;
+	width: auto;
+}
+
+p {
+	text-align: left;
+	padding-left: 2px;
+	margin: 0;
+	height: 14px;
+}
+
+.title,
+.char,
+.enemy,
+.fight,
+.defender {
+	display: flex;
+	flex-direction: row;
+	margin: 0px 7px 7px 7px;
+	align-items: center;
+}
+
+.title {
+	height: 60px;
+	width: 400px;
+	padding-left: 80px;
+}
+
+.char,
+.enemy,
+.defender {
+	height: 150px;
+}
+
+.title-text {
+	padding-left: 18px;
+}
+
+.gen-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	height: 132px;
+	margin-bottom: 5px;
+}
+
+.row-text {
+	width: 18px;
+	height: 150px;
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+.char-box {
+/*	height: 132px;*/
+	width: 104px;
+	color: white;
+	text-align: center;
+	cursor: pointer; 
+  cursor: hand;
+  font-size: 14px;
+  margin-right: 10px;
+  position: relative;
+
+}
+
+.char-content {
+	height: 132px;
+	width: 100px;
+	display: flex;
+  flex-direction: column;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.stats-box {
+	position: absolute;
+	top: 0;
+	left: 2px;
+	height: 132px;
+	width: 100px;
+	background-color: grey;
+	opacity: 0.9;
+	z-index: 1;
+	transition: 0.5s;
+}
+
+.stats-ap {
+	position: absolute;
+	width: 100%;
+	bottom: 3px;
+	font-size: 12px;
+	text-align: center;
+	padding: 0;
+}
+
+.char-img {
+	float: left;
+	width: 80px;
+	height: 115px;
+}
+
+.char-row {
+	display: flex;
+	flex-direction: row;
+	min-height: 115px;
+}
+
+#char_col {
+	height: 115px;
+	width: 15px;
+	padding-left: 4px;
+}
+
+.stats-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#content_ryu {
+	border: 2px solid black;
+	background-color: black;
+}
+
+#content_ken {
+	border: 2px solid red;
+	background-color: red;
+}
+
+#content_blanka {
+	border: 2px solid green;
+	background-color: green;
+}
+
+#content_vega {
+	border: 2px solid purple;
+	background-color: purple;
+}
+
+.fight-btn {
+	margin-left: 10px;
+}
+
+#char_title {
+	padding-top: 5px;
+}
+
+#enemy_title {
+	padding-top: 35px;
+}
+
+#defender_title {
+	padding-top: 20px;
+}
+
+/*Animations*/
+.char-box:hover > .stats-hover {
+	top: 22px;
+	transition: 0.3s;
+	transition-timing-function: ease-in-out;
+}
+.stats-hover {
+	top: 0px;
+	transition: 0.3s;
+	transition-timing-function: ease-in-out;
+}
