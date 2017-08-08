@@ -90,20 +90,45 @@ p {
 	height: 300px;
 }
 
-.meters {
+.player-meter {
 	position: absolute;
-	height: 20px;
+	height: 24px;
 	top: 40px;
-	left: 20px;
-	width: 90%;
+	left: 23px;
+	width: 43%;
+	border: 2px solid lightgrey;
+
+}
+
+.defender-meter {
+	position: absolute;
+	height: 24px;
+	top: 40px;
+	right: 23px;
+	width: 43%;
+	border: 2px solid lightgrey;
+}
+
+#ko {
+	position: absolute;
+	top: 35px;
+	left: 283px;
+	height: 33px;
+	width: 40px;
+	background-color: red;
+	color: white;
+	font-size: 20px;
+	line-height: 33px;
+	text-align: center;
+	border: 2px solid lightgrey;
 }
 
 .name-row {
 	position: absolute;
 	top: 4px;
 	width: 100%;
-	padding-left: 20px;
-	padding-right: 40px;
+	padding-left: 23px;
+	padding-right: 23px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -119,11 +144,11 @@ p {
 .player-box,
 .defender-box {
 	position: absolute;
-	/*z-index: 2;*/
+	z-index: 2;
 	height: 134px;
 	width: 100px;
 	background-color: grey;
-	opacity: 0.8;
+	opacity: 0.9;
 	bottom: 30px;
 }
 
@@ -168,7 +193,6 @@ p {
   font-size: 14px;
   margin-right: 10px;
   position: relative;
-
 }
 
 .char-content {
@@ -272,11 +296,24 @@ p {
 
 /*progress bars*/
 .progress {
-  background-color: red;
   -webkit-box-shadow: none;
   box-shadow: none;
+	border-radius: 0px
 }
-.progress-bar {
+
+.player-progress {
+	background-color: yellow;
+}
+
+.defender-progress {
+	background-color: red;
+}
+
+.player-bar {
+	background-color: red;
+}
+
+.defender-bar {
 	background-color: yellow;
 }
 
@@ -285,7 +322,10 @@ p {
 	height: 50px;
 	width: 90px;
 	cursor: pointer;
-	margin: 50px auto;
+	margin: 25px auto;
+	position: absolute;
+	bottom: 0px;
+	left: 260px;
 }
 .button .outer {
 	position: relative;

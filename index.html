@@ -24,7 +24,7 @@
 	      <h2 class="row-text" id="char_title">C h a r a c t e r</h2>
 	      <div class="gen-row" id="char_row">
 
-	      	<div class="char-box" id="ryu" draggable="true" ondragstart="drag(event);">
+<!-- 	      	<div class="char-box" id="ryu" draggable="true" ondragstart="drag(event);">
 	      		<div class="char-content" id="content_ryu">
 		          <div class="char-row">
 		            <img class="char-img" id="img_ryu" src="assets/images/ryu.jpg" draggable="false">
@@ -38,7 +38,7 @@
 	      		<div class="stats-box stats-hover">
 	      			<p class="stats-ap">AP:7 CP:20</p>
 						</div>
-	        </div>
+	        </div> -->
 
 
 	      </div> 
@@ -49,41 +49,28 @@
 					<div id="name-player">Player</div>
 					<div id="name-comp">Computer</div>
 	    	</div>
-	    	<div class="meters">
-					<div class="progress">
-					  <div class="progress-bar" style="width:60%">
-					  </div>
+
+	    	<div class="player-meter">
+					<div class="progress player-progress">
+					  <div class="progress-bar player-bar" id="player_meter" style="width:40%"></div>
+					</div>
+	    	</div>
+	    	<div id="ko">KO</div>
+	    	<div class="defender-meter">
+					<div class="progress defender-progress">
+					  <div class="progress-bar defender-bar" id="defender_meter" style="width:60%"></div>
 					</div>
 	    	</div>
 
 				<img class="arena-img" src="assets/images/stage_base.jpg">
-				<div class="player-box"></div>
-				<div class="fight" id="fight_info">FIGHT!<br>
-					<div class="button" id="fight-btn"><div class="outer"><div class="height"><div class="inner"></div></div></div></div>
-				</div>
-				<div class="defender-box"></div>
+				<div class="player-box" id="player_box" ondrop="dropPlayer(event)" ondragover="allowDrop(event);"></div>
+
+				<div class="fight" id="fight_info">FIGHT!</div>
+				<div class="button" id="fight-btn"><div class="outer"><div class="height"><div class="inner"></div></div></div></div>
+
+				<div class="defender-box" id="defender_box" ondrop="dropDefender(event)" ondragover="allowDrop(event);"></div>
 				<div></div>
 	    </div>
-
-			
-<!-- 	    <div class="enemy" ondrop="drop(event)" ondragover="allowDrop(event);">
-	      <h2 class="row-text" id="enemy_title">E N E M I E S</h2>
-	      <div class="gen-row" id="enemy_row">
-	      </div>
-	    </div>
-
-	    <div class="fight">
-	      <h2 class="fight-text">Fight! </h2>
-	      <button class="fight-btn" id="fight_btn">Attack</button>
-	    </div>
-
-	    <div class="defender">
-	      <h2 class="row-text" id="defender_title">D E F E N D E R</h2>
-	      <div class="gen-row" id="defender_row">
-	      </div>
-	    </div>
-
-	    <div class="info" id="info"></div> -->
 
 	  </div>
   </div>
@@ -95,11 +82,41 @@
     ev.dataTransfer.setData("text", ev.target.id);
 	}
 
-	function drop(ev) {
+	function dropPlayer(ev) {
 	    ev.preventDefault();
 	    var data = ev.dataTransfer.getData("text");
 	    ev.target.appendChild(document.getElementById(data));
+
+	    //remove drag attributes
+	    player = $('.player-box > .char-box').attr('id');
+	    $("#"+player).removeAttr('draggable ondragstart');
+
+	    //remove hover and show attack
+	    $('.char-box > .stats-box').removeClass('stats-hover');
+	    $("#"+player+"_attack").text($("#"+player).attr('ap'));
+
 	}
+
+	function dropDefender(ev) {
+	    ev.preventDefault();
+	    var data = ev.dataTransfer.getData("text");
+	    ev.target.appendChild(document.getElementById(data));
+
+	    //remove drag elements
+	    defender = $('.defender-box > .char-box').attr('id');
+	    $("#"+defender).removeAttr('draggable ondragstart');
+
+	    //remove hover and show attack
+	    $('.char-box > .stats-box').removeClass('stats-hover');
+	    $("#"+defender+"_attack").text($("#"+defender).attr('cp'));
+
+	    //change stage
+	    var stage = $("#"+defender).attr('stage');
+	    $('.arena-img').attr('src', stage);
+
+	    console.log(stage);
+	}
+
   function allowDrop(ev) {
     ev.preventDefault();
 	}

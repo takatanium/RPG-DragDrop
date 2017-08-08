@@ -4,7 +4,7 @@
 $(document).ready(function(){
 
 	//load initial screen
-	// action.reset();
+	action.reset();
 
   //choose fighter
   $('#char_row').on('click', '.char-box', function() {
@@ -201,21 +201,25 @@ var make = {
 		hp: "180",
 		ap: "7",
 		cp: "20",
+		stage: "assets/images/stage_ryu.jpg"
 	},
 	ken: {
 		hp: "180",
 		ap: "7",
 		cp: "20",
+		stage: "assets/images/stage_ken.jpg"
 	},
 	blanka: {
 		hp: "240",
 		ap: "6",
 		cp: "15",
+		stage: "assets/images/stage_blanka.jpg"
 	},
 	vega: {
 		hp: "160",
 		ap: "10",
 		cp: "25",
+		stage: "assets/images/stage_vega.jpg"
 	},
 	elem: function(fighter) {
 		var fighterObj;
@@ -233,6 +237,7 @@ var make = {
 		}
 		nameTag.text(name);
 		var imgTag = $('<img>').addClass('char-img').attr('src', 'assets/images/'+ fighter +'.jpg');
+		imgTag.attr('draggable','false');
 		var rowTag = $('<div>').addClass('char-row');
 		rowTag.append(imgTag);
 		rowTag.append(nameTag);
@@ -262,6 +267,9 @@ var make = {
 		divTag.attr('ap', fighterObj.ap);
 		divTag.attr('inc', fighterObj.ap);
 		divTag.attr('cp', fighterObj.cp);
+		divTag.attr('stage', fighterObj.stage);
+		divTag.attr('draggable','true');
+		divTag.attr('ondragstart','drag(event)');
 
 		divTag.append(contTag);
 		divTag.append(statsBoxTag);	
