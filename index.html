@@ -52,13 +52,13 @@
 
 	    	<div class="player-meter">
 					<div class="progress player-progress">
-					  <div class="progress-bar player-bar" id="player_meter" style="width:40%"></div>
+					  <div class="progress-bar player-bar" id="player_meter"></div>
 					</div>
 	    	</div>
 	    	<div id="ko">KO</div>
 	    	<div class="defender-meter">
 					<div class="progress defender-progress">
-					  <div class="progress-bar defender-bar" id="defender_meter" style="width:60%"></div>
+					  <div class="progress-bar defender-bar" id="defender_meter" style="width:100%"></div>
 					</div>
 	    	</div>
 
@@ -66,7 +66,7 @@
 				<div class="player-box" id="player_box" ondrop="dropPlayer(event)" ondragover="allowDrop(event);"></div>
 
 				<div class="fight" id="fight_info">FIGHT!</div>
-				<div class="button" id="fight-btn"><div class="outer"><div class="height"><div class="inner"></div></div></div></div>
+				<div class="button" id="fight_btn"><div class="outer"><div class="height"><div class="inner"></div></div></div></div>
 
 				<div class="defender-box" id="defender_box" ondrop="dropDefender(event)" ondragover="allowDrop(event);"></div>
 				<div></div>
@@ -92,9 +92,16 @@
 	    $("#"+player).removeAttr('draggable ondragstart');
 
 	    //remove hover and show attack
-	    $('.char-box > .stats-box').removeClass('stats-hover');
+	    $('#'+player+' > .stats-box').removeClass('stats-hover');
 	    $("#"+player+"_attack").text($("#"+player).attr('ap'));
 
+	    //fill hp gauge
+	    $('.player-bar').css('width', '0%');
+
+	    //check if both player and defender, if so then halt all draggable
+	    if (player !="" && defender != "") {
+	    	$('.char-box').removeAttr('draggable ondragstart');
+	    }
 	}
 
 	function dropDefender(ev) {
@@ -107,19 +114,26 @@
 	    $("#"+defender).removeAttr('draggable ondragstart');
 
 	    //remove hover and show attack
-	    $('.char-box > .stats-box').removeClass('stats-hover');
+	    $('#'+defender+' > .stats-box').removeClass('stats-hover');
 	    $("#"+defender+"_attack").text($("#"+defender).attr('cp'));
 
 	    //change stage
 	    var stage = $("#"+defender).attr('stage');
 	    $('.arena-img').attr('src', stage);
 
-	    console.log(stage);
+	    //fill hp gauge
+	    $('.defender-bar').css('width', '100%');
+
+	    //check if both player and defender, if so then halt all draggable
+	    if (player !="" && defender != "") {
+	    	$('.char-box').removeAttr('draggable ondragstart');
+	    }
 	}
 
   function allowDrop(ev) {
     ev.preventDefault();
 	}
+
   </script>
 </body>
 </html>

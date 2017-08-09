@@ -6,15 +6,9 @@ $(document).ready(function(){
 	//load initial screen
 	action.reset();
 
-  //choose fighter
-  $('#char_row').on('click', '.char-box', function() {
-  	shift.toEnemy(this);
-
-		$('#enemy_row').on('click', '.char-box', function() {
-	  	shift.toDefender(this);
-		});
-
-	});
+	// $('#player_meter').css('width', 0);
+	$(".defender-bar").css("width", "0%");
+	$(".player-bar").css("width", "100%");
 
 	$('#fight_btn').on('click', function() {
 		if (player != "" && defender != "" && $("#"+player).attr('hp') > 0) {
@@ -34,10 +28,14 @@ $(document).ready(function(){
 			}
 			else {
 				//eliminate defender
-				$('#defender_row').html("");
+				$('#defender_box').html("");
 				defender = "";
+				//make char-row draggable again
+				$('.gen-row > .char-box').attr('draggable', 'True');
+				$('.gen-row > .char-box').attr('ondragstart','drag(event)');
+
 				//check if won
-				if ($("#defender_row > .char-box").length < 1 && $("#enemy_row > .char-box").length < 1) {
+				if ($("#defender_box > .char-box").length < 1 && $("#enemy_row > .char-box").length < 1) {
 					action.displayInfo(playEl, defEl, "won");
 				}
 				else {
@@ -53,58 +51,34 @@ $(document).ready(function(){
 
 });
 
-var shift = {
-	toEnemy: function(fighter) {
-		$('#char_row').children('div').each(function() { 
-			if (this != fighter) {
-				$('#enemy_row').append(this);
-			}
-			else {
-				if ($("#char_row > .char-box").length > 1) {
-					player = this.id;
-				}
-			}
-		});
-		action.displayAttacks();
-	},
-
-	toDefender: function(fighter) {
-		if ($("#defender_row > .char-box").length < 1) {
-			$('#enemy_row').children('div').each(function() { 
-				if (this === fighter) {
-					$('#defender_row').append(this);
-					defender = this.id;
-					action.displayInfo(player, defender, "clear");
-				}
-			});
-		}
-	},
-
-	hide: function(fighter) {
-		$('#defender_row').children('div').each(function() { 
-			if (this === fighter) {
-				$('#info').append(this);
-			}
-		});	
-	}
-}
-
 var action = {
 	decDefHP: function(playEl, defEl) {
-		var playAP = $(playEl).attr("ap");
-		var defHP = $(defEl).attr("hp");
+		var playAP = parseInt($(playEl).attr("ap"));
+		var defHP = parseInt($(defEl).attr("hp"));
+		var maxHP = parseInt($(defEl).attr("maxhp"));
 
-		var intDefHP = parseInt(defHP) - parseInt(playAP);
+		var intDefHP = defHP - playAP;
 		$(defEl).attr("hp", intDefHP);
+
+		var percentDefHP = (intDefHP/maxHP) * 100;
+		var stringDefHP = percentDefHP+"%";
+
+		$('.defender-bar').css('width', stringDefHP);
 
 		return intDefHP;
 	},
 	decPlayHP: function(playEl, defEl) {
-		var playHP = $(playEl).attr("hp");
-		var defCP = $(defEl).attr("cp");
+		var playHP = parseInt($(playEl).attr("hp"));
+		var maxHP = parseInt($(playEl).attr("maxhp"));
+		var defCP = parseInt($(defEl).attr("cp"));
 
 		var intPlayHP = Math.max((parseInt(playHP) - parseInt(defCP)), 0);
 		$(playEl).attr("hp", intPlayHP);
+
+		var percentPlayHP = 100-((intPlayHP/maxHP) * 100);
+		var stringPlayHP = percentPlayHP+"%";
+
+		$('.player-bar').css('width', stringPlayHP);
 
 		return intPlayHP;
 	},
@@ -264,6 +238,7 @@ var make = {
 		//create and populate character element
 		var divTag = $('<div>').addClass('char-box').attr('id', fighter);
 		divTag.attr('hp', fighterObj.hp);
+		divTag.attr('maxhp', fighterObj.hp);
 		divTag.attr('ap', fighterObj.ap);
 		divTag.attr('inc', fighterObj.ap);
 		divTag.attr('cp', fighterObj.cp);
