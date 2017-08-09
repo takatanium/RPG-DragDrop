@@ -80,7 +80,6 @@ p {
 .arena {
 	position: relative;
 	width: 100%;
-	margin-top: 20px;
 	margin-bottom: 20px;
 	border: 2px solid black;
 }
@@ -97,7 +96,6 @@ p {
 	left: 23px;
 	width: 43%;
 	border: 2px solid lightgrey;
-
 }
 
 .defender-meter {
@@ -134,10 +132,6 @@ p {
 	justify-content: space-between;
 	font-size: 24px;
 	color: red;
-/*  background: -webkit-linear-gradient(top, red, yellow);
-	background: linear-gradient(top, darkred, yellow);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;*/
 	text-shadow: 2px 2px #000000;
 }
 
@@ -167,7 +161,56 @@ p {
 	color: red;
 	text-align: center;
 	font-size: 30px;
-	text-shadow: 2px 2px #000000;
+	text-shadow: 2px 2px #000000;w;
+}
+
+#arrow_left {
+	position: absolute;
+	top: 130px;
+	left: 180px;
+	height: 30px;
+	animation-name: bounce-left;
+	animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce-left {
+  0% {transform: scaleX(-1) translateX(0);} 
+  50% {transform: scaleX(-1) translateX(20px);}
+  100% {transform: scaleX(-1) translateX(0);}    
+}
+
+#arrow_right {
+	position: absolute;
+	top: 130px;
+	right: 180px;
+	height: 30px;
+	animation-name: bounce-right;
+	animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce-right {
+  0% {transform: translateX(0);} 
+  50% {transform: translateX(20px);}
+  100% {transform: translateX(0);}    
+}
+
+#arrow_down {
+	position: absolute;
+	top: 170px;
+	right: 287px;
+	height: 30px;
+	width: 30px;
+	animation-name: bounce-down;
+	animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce-down {
+  0% {transform: translateY(0);} 
+  50% {transform: translateY(15px);}
+  100% {transform: translateY(0);}    
 }
 
 .gen-row {
@@ -241,6 +284,15 @@ p {
 	display: flex;
 	flex-direction: row;
 	min-height: 115px;
+}
+
+.reset-row {
+	height: 26px;
+	width: 100%;
+}
+
+#reset_btn {
+	float: right;
 }
 
 #char_col {

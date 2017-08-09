@@ -1,16 +1,19 @@
-	var player = "";
-	var defender = "";
-
 $(document).ready(function(){
 
 	//load initial screen
 	action.reset();
 
-	// $('#player_meter').css('width', 0);
-	$(".defender-bar").css("width", "0%");
-	$(".player-bar").css("width", "100%");
-
 	$('#fight_btn').on('click', function() {
+		var player = "";
+		var defender = "";
+
+		if ($('.player-box > .char-box').length > 0) {
+			var player = $('.player-box > .char-box').attr('id');
+		}
+		if ($('.defender-box > .char-box').length > 0) {
+			var defender = $('.defender-box > .char-box').attr('id');
+		}
+
 		if (player != "" && defender != "" && $("#"+player).attr('hp') > 0) {
 			var playEl = "#" + player;
 			var defEl = "#" + defender;
@@ -20,26 +23,26 @@ $(document).ready(function(){
 				//check if player still alive
 				if (action.decPlayHP(playEl, defEl) <= 0) {
 					//game over
-					action.displayInfo(playEl, defEl, "lost");	
+					action.displayFight('lose');	
 				} 
 				else {
-					action.displayInfo(playEl, defEl, "attacking");	
+					action.displayFight('fight');	
 				}
 			}
 			else {
 				//eliminate defender
-				$('#defender_box').html("");
+				$('#defender_box').empty();
 				defender = "";
+
 				//make char-row draggable again
 				$('.gen-row > .char-box').attr('draggable', 'True');
 				$('.gen-row > .char-box').attr('ondragstart','drag(event)');
 
+				action.displayFight('choose');
+
 				//check if won
-				if ($("#defender_box > .char-box").length < 1 && $("#enemy_row > .char-box").length < 1) {
-					action.displayInfo(playEl, defEl, "won");
-				}
-				else {
-					action.displayInfo(playEl, defEl, "oneDown");
+				if ($("#defender_box > .char-box").length < 1 && $("#char_row > .char-box").length < 1) {
+					action.displayFight('won');
 				}
 			}
 
@@ -47,6 +50,11 @@ $(document).ready(function(){
 			action.displayAP(playEl, defEl);
 			action.displayHP(playEl, defEl);
 		}
+	});
+
+	//set reset button click
+	$('#reset_btn').on('click', function() {
+			action.reset();
 	});
 
 });
@@ -118,46 +126,50 @@ var action = {
 
 		$('.stats-box').removeClass('stats-hover');
 	},
-	displayInfo: function(playEl, defEl, status) {
-		var info;
-		var reset="";
-		if (status === "attacking") {
-			var playAP = $(playEl).attr("ap");
-			var defCP = $(defEl).attr("cp");
-
-			info = "<p>You attacked " + defender + " for " + playAP + " damage.</p>";
-			info += "<p>" + defender + " countered for " + defCP + " damage.</p>";
+	displayFight: function(status) {
+		if (status === 'init') {
+			$('#fight_info').text("Drag-n-Drop");
+			$('#fight_info').css("font-size", "20px");
+			$('#fight_info').css("color", "red");
+			$('#arrow_down').hide();
+			$('#arrow_left').show();
+			$('#arrow_right').show();
 		}
-		else if (status === "lost") {
-			info = "You have been defeated...<br>";
-			reset = $('<button>Reset</button>').on('click', function() {
-				action.reset();
-			});
+		else if (status === 'fight') {
+			$('#fight_info').text("Fight!");
+			$('#fight_info').css("font-size", "30px");
+			$('#arrow_down').show();
+			$('#arrow_left').hide();
+			$('#arrow_right').hide();
 		}
-		else if (status === "won") {
-			info = "Congratulations, you won!<br>";
-			reset = $('<button>Reset</button>').on('click', function() {
-				action.reset();
-			});
+		else if (status === 'lose') {
+			$('#fight_info').text("You Lose");
+			$('#fight_info').css("font-size", "30px");
+			$('#arrow_down').hide();
+			$('#arrow_left').hide();
+			$('#arrow_right').hide();
 		}
-		else if (status === "clear") {
-			info = "";
+		else if (status === 'won') {
+			$('#fight_info').text("You Win!");
+			$('#fight_info').css("font-size", "30px");
+			$('#fight_info').css("color", "yellow");
+			$('#arrow_down').hide();
+			$('#arrow_left').hide();
+			$('#arrow_right').hide();
 		}
-		else {
-			info = "<p>You have defeated " + defender + "!</p>";
-			info += "<p>Choose another enemy.</p>";
+		else { //defender defeated, choose another
+			$('#fight_info').text("Choose");
+			$('#fight_info').css("font-size", "30px");
+			$('#arrow_right').show();
+			$('#arrow_down').hide();
+			$('#arrow_left').hide();
 		}
-
-		$('#info').html(info);
-		$('#info').append(reset);
 	},
 	reset: function() {
-		//restore global vars
-		player = "";
-		defender = "";
-
 		//clear all char rows
 		$('.gen-row').html("");
+		$('.player-box').empty();
+		$('.defender-box').empty();
 
 		//regenerate characters
 		$('#char_row').append(make.elem("ryu"));
@@ -165,8 +177,14 @@ var action = {
 		$('#char_row').append(make.elem("blanka"));
 		$('#char_row').append(make.elem("vega"));
 
-		//clear info 
-		$('#info').html("");
+		action.displayFight('init');
+
+		//empty meters
+		$(".defender-bar").css("width", "0%");
+		$(".player-bar").css("width", "100%");
+
+		//reset screen
+		$('.arena-img').attr('src', "assets/images/stage_base.jpg");
 	}
 }
 
@@ -251,4 +269,70 @@ var make = {
 
 		return divTag;		
 	}
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function dropPlayer(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+
+    //remove drag attributes
+    var player = $('.player-box > .char-box').attr('id');
+    $("#"+player).removeAttr('draggable ondragstart');
+
+    //remove hover and show attack
+    $('#'+player+' > .stats-box').removeClass('stats-hover');
+    $("#"+player+"_attack").text($("#"+player).attr('ap'));
+
+    //hide left arrow
+    $('#arrow_left').hide();
+
+    //fill hp gauge
+    $('.player-bar').css('width', '0%');
+
+    //check if both player and defender, if so then halt all draggable
+    if ($('.player-box > .char-box').length > 0 && $('.defender-box > .char-box').length > 0) {
+    	$('.char-box').removeAttr('draggable ondragstart');
+    	//change fight info
+    	action.displayFight('fight');
+    }
+}
+
+function dropDefender(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+
+    //remove drag elements
+    var defender = $('.defender-box > .char-box').attr('id');
+    $("#"+defender).removeAttr('draggable ondragstart');
+
+    //remove hover and show attack
+    $('#'+defender+' > .stats-box').removeClass('stats-hover');
+    $("#"+defender+"_attack").text($("#"+defender).attr('cp'));
+
+    //hide right arrow
+    $('#arrow_right').hide();
+
+    //change stage
+    var stage = $("#"+defender).attr('stage');
+    $('.arena-img').attr('src', stage);
+
+    //fill hp gauge
+    $('.defender-bar').css('width', '100%');
+
+    //check if both player and defender, if so then halt all draggable
+    if ($('.player-box > .char-box').length > 0 && $('.defender-box > .char-box').length > 0) {
+    	$('.char-box').removeAttr('draggable ondragstart');
+    	//change fight info
+    	action.displayFight('fight');
+    }
+}
+
+function allowDrop(ev) {
+  ev.preventDefault();
 }

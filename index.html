@@ -23,26 +23,10 @@
 	    <div class="char">
 	      <h2 class="row-text" id="char_title">C h a r a c t e r</h2>
 	      <div class="gen-row" id="char_row">
-
-<!-- 	      	<div class="char-box" id="ryu" draggable="true" ondragstart="drag(event);">
-	      		<div class="char-content" id="content_ryu">
-		          <div class="char-row">
-		            <img class="char-img" id="img_ryu" src="assets/images/ryu.jpg" draggable="false">
-		            <p id="char_col">R Y U</p>
-		          </div>
-		          <div class="stats-row">
-		          	<p id="ryu_hp">180</p>
-		          	<p id="ryu_attack"></p>
-		          </div>
-	          </div>
-	      		<div class="stats-box stats-hover">
-	      			<p class="stats-ap">AP:7 CP:20</p>
-						</div>
-	        </div> -->
-
-
 	      </div> 
 	    </div>
+
+			<div class="reset-row"><button id="reset_btn">Reset</button></div>
 
 	    <div class="arena">
 	    	<div class="name-row">
@@ -65,7 +49,11 @@
 				<img class="arena-img" src="assets/images/stage_base.jpg">
 				<div class="player-box" id="player_box" ondrop="dropPlayer(event)" ondragover="allowDrop(event);"></div>
 
-				<div class="fight" id="fight_info">FIGHT!</div>
+				<div class="fight" id="fight_info"></div>
+				<img src="assets/images/arrow.png" id="arrow_left">
+				<img src="assets/images/arrow.png" id="arrow_right">
+				<img src="assets/images/arrow_down.png" id="arrow_down">
+
 				<div class="button" id="fight_btn"><div class="outer"><div class="height"><div class="inner"></div></div></div></div>
 
 				<div class="defender-box" id="defender_box" ondrop="dropDefender(event)" ondragover="allowDrop(event);"></div>
@@ -76,64 +64,5 @@
   </div>
 
   <script src="assets/javascript/game.js"></script>
-
-  <script>
-  function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-	}
-
-	function dropPlayer(ev) {
-	    ev.preventDefault();
-	    var data = ev.dataTransfer.getData("text");
-	    ev.target.appendChild(document.getElementById(data));
-
-	    //remove drag attributes
-	    player = $('.player-box > .char-box').attr('id');
-	    $("#"+player).removeAttr('draggable ondragstart');
-
-	    //remove hover and show attack
-	    $('#'+player+' > .stats-box').removeClass('stats-hover');
-	    $("#"+player+"_attack").text($("#"+player).attr('ap'));
-
-	    //fill hp gauge
-	    $('.player-bar').css('width', '0%');
-
-	    //check if both player and defender, if so then halt all draggable
-	    if (player !="" && defender != "") {
-	    	$('.char-box').removeAttr('draggable ondragstart');
-	    }
-	}
-
-	function dropDefender(ev) {
-	    ev.preventDefault();
-	    var data = ev.dataTransfer.getData("text");
-	    ev.target.appendChild(document.getElementById(data));
-
-	    //remove drag elements
-	    defender = $('.defender-box > .char-box').attr('id');
-	    $("#"+defender).removeAttr('draggable ondragstart');
-
-	    //remove hover and show attack
-	    $('#'+defender+' > .stats-box').removeClass('stats-hover');
-	    $("#"+defender+"_attack").text($("#"+defender).attr('cp'));
-
-	    //change stage
-	    var stage = $("#"+defender).attr('stage');
-	    $('.arena-img').attr('src', stage);
-
-	    //fill hp gauge
-	    $('.defender-bar').css('width', '100%');
-
-	    //check if both player and defender, if so then halt all draggable
-	    if (player !="" && defender != "") {
-	    	$('.char-box').removeAttr('draggable ondragstart');
-	    }
-	}
-
-  function allowDrop(ev) {
-    ev.preventDefault();
-	}
-
-  </script>
 </body>
 </html>
